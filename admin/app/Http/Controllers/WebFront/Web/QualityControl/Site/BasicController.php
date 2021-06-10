@@ -1,0 +1,166 @@
+<?php
+namespace App\Http\Controllers\WebFront\Web\QualityControl\Site;
+
+
+use App\Business\Controller\API\QualityControl\CTAPIStaffBusiness;
+use App\Business\Controller\API\QualityControl\CTAPIVodOrdersBusiness;
+use App\Http\Controllers\WorksController;
+use App\Services\Tool;
+use Illuminate\Http\Request;
+
+class BasicController extends \App\Http\Controllers\WebFront\Web\QualityControl\BasicController
+{
+    public static $ALLOW_BROWSER_OPEN = true;// 微信内支付：调试用开关，true:所有浏览器都能开； false:只有微信内浏览器
+    // 每一种登录项的唯一标识【大后台：adimn; 企业：company;用户：user】,每一种后台控制器父类，修改成自己的唯一值
+    //        用途，如加入到登录状态session中，就可以一个浏览器同时登录多个后台。--让每一个后台session的键都唯一，不串（重）
+//    public $siteLoginUniqueKey = 'web';
+//    public $user_type = 0;// 登录用户所属的后台类型  1平台2企业4个人
+
+    // 获得当前登录状态者的 是组织id
+//    public function initOwnOrganizeId(){
+//         $userInfo = $this->user_info;
+//         $admin_type = $userInfo['admin_type'] ?? 0;
+//         if($admin_type == 2) return $this->user_id;
+//        return 0;// $this->user_id; // 真正的企业后台用这个值 ； $userInfo['company_id'] ?? 0; 真正的个人后台用这个值 ；个人用0比较对
+//    }
+
+    // 获得个人id--最底层登录人员id，如果是个人登录的话，否则为0
+    // 各后台可重写此方法，特别是个人后台中心
+//    public function initPersonalId(){
+//        $userInfo = $this->user_info;
+//        $admin_type = $userInfo['admin_type'] ?? 0;
+//        if($admin_type == 4) return $this->user_id;// 真正的个人后台用这个值
+//        return 0;
+//    }
+
+    // 重购方法
+
+    // 获取
+    //  -  $siteLoginUniqueKey 指定就使用指定的，没有，则使用设置的 每一种登录项的唯一标识【大后台：adimn; 企业：company;用户：user】,每一种后台控制器父类，修改成自己的唯一值
+    //
+    // $errDo 如果未登录是否进行错误处理【抛异常等】 true:处理【抛异常等】--默认； false:不处理--因为有的前端页面可能需要自己去判断
+//    public function getUserInfo(Request $request, $siteLoginUniqueKey = '', $errDo = true){
+//        if(empty($siteLoginUniqueKey)) $siteLoginUniqueKey = $this->siteLoginUniqueKey;
+//        $staff_id = Tool::getSession($this->redisKey, $this->save_session,
+//            config('public.sessionKey') . $siteLoginUniqueKey, config('public.sessionRedisTye'));
+//        if($errDo && !is_numeric($staff_id)) throws('登录失效，请重新登录！', $this->getNotLoginErrCode());
+//        $userInfo = $this->getStaffInfo($staff_id, $errDo);
+////        $userInfo = CTAPIStaffBusiness::getInfoDataBase(\request(), $this,'', $staff_id, [], '', 1);
+//        // 对数据进行有效性验证
+//        if($errDo && (empty($userInfo) || count($userInfo) <= 0)){
+//            $this->delUserInfo();
+//            throws('用户名信息不存在！');
+//        }
+//
+////        if($errDo && $userInfo['admin_type'] != $this->user_type ){
+////            $this->delUserInfo();
+////            throws('非法访问！');
+////        }
+//        if($errDo && $userInfo['account_status'] == 2 ){
+//            $this->delUserInfo();
+//            throws('用户已冻结！');
+//        }
+
+//if($errDo && $userInfo['open_status'] == 1 ){
+//$this->delUserInfo();
+//throws('审核中，请耐心等待！');
+//}
+//if($errDo && $userInfo['open_status'] == 4 ){
+//    $this->delUserInfo();
+//    throws('审核未通过！');
+//}
+//if($errDo && $userInfo['open_status'] != 2 ){
+//    $this->delUserInfo();
+//    throws('非审核通过！');
+//}
+//        return $userInfo;
+//    }
+//
+//    // 根据用户id ，判断权限
+//    // $errDo 如果未登录是否进行错误处理【抛异常等】 true:处理【抛异常等】--默认； false:不处理--因为有的前端页面可能需要自己去判断
+//    public function getStaffInfo($staff_id = 0, $errDo = true){
+//        if($errDo && !is_numeric($staff_id)) throws('参数【staff_id】有误！');
+//        $userInfo = [];
+//        if(is_numeric($staff_id) && $staff_id > 0) $userInfo = CTAPIStaffBusiness::getInfoDataBase(\request(), $this,'', $staff_id, [], '', 1);
+//        if(!is_array($userInfo) || empty($userInfo)) $userInfo = [];
+//        // 对数据进行有效性验证
+////        if($errDo && (empty($userInfo) || count($userInfo) <= 0)){
+////            $this->delUserInfo();
+////            throws('用户名信息不存在！');
+////        }
+////
+////        if($errDo && $userInfo['admin_type'] != 1 ){
+////            $this->delUserInfo();
+////            throws('非法访问！');
+////        }
+////
+////        if($errDo && $userInfo['account_status'] == 2 ){
+////            $this->delUserInfo();
+////            throws('用户已冻结！');
+////        }
+//if($errDo && $userInfo['open_status'] == 1 ){
+//$this->delUserInfo();
+//throws('审核中，请耐心等待！');
+//}
+//if($errDo && $userInfo['open_status'] == 4 ){
+//    $this->delUserInfo();
+//    throws('审核未通过！');
+//}
+//if($errDo && $userInfo['open_status'] != 2 ){
+//    $this->delUserInfo();
+//    throws('非审核通过！');
+//}
+//        return $userInfo;
+//    }
+
+    /**
+     * 判断具体的视频课程是否有权限访问【观看】
+     *
+     * @param Request $request
+     * @return int 权限 1：没有登录 ；2：没有购买
+     * @author zouyan(305463219@qq.com)
+     */
+    public function getVodPower(Request $request, &$reDataArr, $vodId = 0){
+        $powerNo = 0;
+        // $this->InitParams($request, false);
+        $userInfo = $this->user_info;
+        if(empty($userInfo)){// 1：没有登录
+            $powerNo |= 1;
+            $reDataArr['vod_power'] = $powerNo;
+            return $powerNo;
+        }
+        $admin_type = $userInfo['admin_type'] ?? 0;// 拥有者类型1平台2企业4个人8专家16第三方服务商
+        $company_id = $userInfo['company_id'] ?? 0;// 所属企业-个人
+        $user_id = $userInfo['id'] ?? 0;// 个人或企业id
+
+        $company_id_search = [$user_id];
+        if(is_numeric($company_id) && $company_id > 0) array_push($company_id_search, $company_id);
+
+        // 查看是否有购买
+        $vodOrderInfo = CTAPIVodOrdersBusiness::getFVFormatList( $request,  $this, 4, 1
+            , ['company_id' => $company_id_search, 'vod_id' => $vodId, 'company_status' => 1, 'pay_status' => [2,4,8]], false);
+        if(empty($vodOrderInfo)){// 2：没有购买
+            $powerNo |= 2;
+            $reDataArr['vod_power'] = $powerNo;
+            return $powerNo;
+        }
+        $reDataArr['vod_power'] = $powerNo;
+        return $powerNo;
+
+    }
+    /**
+     * 获得企业自己的id，或用户所属的企业id
+     *
+     * @param Request $request
+     * @return int
+     * @author zouyan(305463219@qq.com)
+     */
+    public function getCompanyOrgId(Request $request){
+        $userInfo = $this->user_info;
+        $adminType = $this->admin_type;
+        if($adminType == 2) return $this->user_id ?? 0;
+        if($adminType == 4) return $this->user_info['company_id'] ?? 0;
+        return 0;
+
+    }
+}
